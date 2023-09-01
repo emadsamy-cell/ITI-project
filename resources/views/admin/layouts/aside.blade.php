@@ -82,32 +82,14 @@
       <li class="menu-item">
         <a href="javascript:void(0);" class="menu-link menu-toggle">
           <i class="menu-icon tf-icons bx bx-detail"></i>
-          <div data-i18n="Form Elements">Categories &amp; Products</div>
+          <div data-i18n="Form Elements">Books</div>
         </a>
         <ul class="menu-sub">
-            <li class="menu-item">
-              <a href="{{ route('AdminCategory.create') }}" class="menu-link">
-                <div data-i18n="Vertical Form">Add Category</div>
-              </a>
-            </li>
             <li class="menu-item">
               <a href="{{ route('AdminProduct.create') }}" class="menu-link">
-                <div data-i18n="Horizontal Form">Add Product</div>
+                <div data-i18n="Horizontal Form">Add Book</div>
               </a>
             </li>
-        </ul>
-      </li>
-      <li class="menu-item">
-        <a href="javascript:void(0);" class="menu-link menu-toggle">
-          <i class="menu-icon tf-icons bx bx-detail"></i>
-          <div data-i18n="Form Layouts">Users</div>
-        </a>
-        <ul class="menu-sub">
-          <li class="menu-item">
-            <a href="{{ route('AdminUser.create') }}" class="menu-link">
-              <div data-i18n="Vertical Form">Add User</div>
-            </a>
-          </li>
         </ul>
       </li>
       <!-- Tables -->

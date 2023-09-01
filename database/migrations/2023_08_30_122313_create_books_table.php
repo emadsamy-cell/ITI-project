@@ -19,7 +19,8 @@ return new class extends Migration
             $table->double('price', 8, 2);
             $table->boolean('avaliable');
             $table->string('author');
-            $table->foreignId('assignID');
+            $table->foreignId('assignID')->nullable();
+            $table->string('image');
             $table->timestamps();
         });
     }

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\book;
+use App\Models\borrow;
 use App\Models\checkout;
 use App\Models\product;
 use App\Models\User;
@@ -16,13 +18,13 @@ class AdminController extends Controller
     public function index()
     {
 
-       $users = [];
+       $users = User::all()->where('isAdmin',0);
 
-       $products = [];
+       $books = book::all();
 
-       $checkouts = [];
+       $borrows = borrow::all();
 
-       return view('admin.dashboard' , ['users' => $users , 'products' => $products , 'checkouts' => $checkouts]);
+       return view('admin.dashboard' , ['users' => $users , 'books' => $books , 'borrows' => $borrows]);
     }
 
     /**
