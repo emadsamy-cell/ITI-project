@@ -29,9 +29,9 @@ class cart
         }
 
         $storeItem['qty'] += $count;
-        $storeItem['price'] = $product->NewPrice ;
+        $storeItem['price'] = $product->price ;
         $this->items[$product->id] = $storeItem;
-        $this->totalPrice += $product->NewPrice * $count;
+        $this->totalPrice += $product->price * $count;
         $this->totalQty +=$count;
 
     }
@@ -43,7 +43,7 @@ class cart
 
     public function Update($id , $count){
 
-        $product = product::find($id);
+        $product = book::find($id);
 
         $this->remove($id);
         $this->addToCart($product , $count);

@@ -30,12 +30,13 @@ use Illuminate\Support\Facades\Route;
 
 Route::resource('/',homeController::class)->names([
     'index' => 'home' ,
-    'show' => 'show-products'
+    'show' => 'show-products',
 ]);
+
+
 
 Route::resource('HomeProduct' , HomeProductController::class);
 Route::resource('HomeShop', HomeShopController::class);
-Route::resource('WishList', WishListController::class);
 Route::get('Cart/{id}/{count}' , [CartController::class , 'add'])->name('addToCart');
 Route::get('Cart/{id}}' , [CartController::class , 'delete'])->name('deleteFromCart');
 Route::post('Cart/{id}' , [CartController::class , 'addMany'])->name('addManyToCart');
@@ -47,6 +48,7 @@ Route::middleware('Admin')->group(function(){
 
     Route::resource('admin', AdminController::class);
     Route::resource('AdminUser' , AdminUserController::class);
+    Route::get('AdminProfile' , [AdminUserController::class, 'profile'])->name('AdminProfile');
     Route::resource('AdminProduct', AdminProductController::class);
     Route::resource('AdminCategory' , AdminCategoryController::class);
     Route::get('OrderStatus/{id}/{status}' , [AdminOrderController::class , 'status_update'])->name('UpdateStatus');
@@ -56,14 +58,15 @@ Route::middleware('Admin')->group(function(){
 
 
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::get('profile', [homeController::class , 'profile'])->name('profile');
+    Route::post('updateProfile', [homeController::class , 'updateProfile'])->name('updateProfile');
+    Route::get('/dashboard' , [homeController::class , 'dashboard'])->name('dashboard');
+    Route::get('/return/{id}', [homeController::class, 'return'])->name('returnToShelf');
+    /*Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');*/
 });
 
 require __DIR__.'/auth.php';

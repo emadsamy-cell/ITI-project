@@ -23,7 +23,8 @@
                                     <form method="POST" action="{{ route('logout') }}">
                                         @csrf
                                         <ul class="ht-setting-list">
-                                            <li><a href="login-register.html">Check Out</a></li>
+                                            <li><a href="{{ route('profile') }}">Profile</a></li>
+                                            <li><a href="{{ route('dashboard') }}">Dashboard</a></li>
                                             <li>
                                             <button  type="submit" style="
                                                 border: 0;
@@ -99,22 +100,6 @@
                     <!-- Begin Header Middle Right Area -->
                     <div class="header-middle-right">
                         <ul class="hm-menu">
-                            <!-- Begin Header Middle Wishlist Area -->
-                            <li class="hm-wishlist">
-                                <a href="{{ route('WishList.index') }}">
-                                    <span class="cart-item-count wishlist-item-count">
-                                        @auth
-                                            {{ count(Auth::user()->wishlists) }}
-                                        @endauth
-                                        @guest
-                                            0
-                                        @endguest
-                                    </span>
-                                    <i class="fa fa-heart-o"></i>
-                                </a>
-                            </li>
-                            <!-- Header Middle Wishlist Area End Here -->
-                            <!-- Begin Header Mini Cart Area -->
 
                             <li class="hm-minicart">
                                 <div class="hm-minicart-trigger">
@@ -149,7 +134,7 @@
                                                 <a href="{{ route('cart.index') }}" class="li-button li-button-dark li-button-fullwidth li-button-sm">
                                                     <span>View Full Cart</span>
                                                 </a>
-                                                <a href="{{ route('checkout.index') }}" class="li-button li-button-fullwidth li-button-sm">
+                                                <a href="{{ route('checkout.create') }}" class="li-button li-button-fullwidth li-button-sm">
                                                     <span>Checkout</span>
                                                 </a>
                                             </div>

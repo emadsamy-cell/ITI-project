@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProductRequest;
+use App\Models\book;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -22,34 +23,39 @@ class AdminProductController extends Controller
      */
     public function create()
     {
-        $categories = [];
 
-        return view('admin.controller.add_product' , [ 'categories' => $categories]);
+        return view('admin.controller.add_product' );
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store($request)
+    public function store(Request $request)
     {
-      /*  $image = $request->file('image');
+
+        $request->validate([
+            'title' =>['required','unique:books,title'],
+            'author' =>['required'],
+            'price' => ['required' , 'numeric'],
+            'discription' => ['required'],
+            'avaliable' =>['required','numeric','min:0'],
+        ]);
+
+        $image = $request->file('image');
         $ext = $image->getClientOriginalExtension();
-        $image_name = "product".$request->name.$ext;
+        $image_name = "product".$request->title.$ext;
 
         $image->move(public_path('images/product') , $image_name);
 
 
-        product::create([
-            'name' => $request->name,
-            'category_id' => $request->category,
-            'OldPrice'=> $request->price,
-            'NewPrice' => ($request->price - $request->price * $request->discount/100),
+        book::create([
+            'title' => $request->title,
+            'price'=> $request->price,
             'image' => $image_name,
             'discription' => $request->discription,
-            'discount' => $request->discount,
+            'author' => $request->author,
             'avaliable' => $request->avaliable,
-            'Isdiscount' => ($request->discount != 0),
-        ]);*/
+        ]);
         return redirect('admin')->with('success' , 'Product Added Successfully');
     }
 
@@ -66,10 +72,9 @@ class AdminProductController extends Controller
      */
     public function edit(string $id)
     {
-      //  $product = product::find($id);
-      //  $categories = category::get();
+        $book = book::find($id);
 
-        return view('admin.product.edit',['product' => [] , 'categories' => []]);
+        return view('admin.product.edit',['book' => $book]);
     }
 
     /**
@@ -78,20 +83,21 @@ class AdminProductController extends Controller
     public function update(Request $request, string $id)
     {
 
-       /* $product = product::find($id);
+        $book = book::find($id);
 
 
 
         $request->validate([
-            'name' =>['required',
-                    Rule::unique('products','name')->ignore($id)],
-            'price' => ['required' , 'numeric','decimal:0,2'],
+            'title' =>['required',
+                    Rule::unique('books','title')->ignore($id)],
+            'author' =>['required'],
+            'price' => ['required' , 'numeric'],
             'discription' => ['required'],
-            'discount' =>['required','numeric','between:0,100'],
             'avaliable' =>['required','numeric','min:0'],
-            'category' =>['required'],
         ]);
-        $image_name = $product->image;
+
+        $image_name = $book->image;
+
         if($request->files->has('image')){
             $request->validate([
                 'image' => 'required|image',
@@ -102,17 +108,14 @@ class AdminProductController extends Controller
             $img->move(public_path('images/product'),$image_name);
         }
 
-        $product->name = $request->name;
-        $product->discription = $request->discription;
-        $product->discount = $request->discount;
-        $product->image = $image_name;
-        $product->avaliable = $request->avaliable;
-        $product->OldPrice = $request->price;
-        $product->NewPrice = $request->price - ($request->price * $request->discount / 100);
-        $product->category_id = $request->category;
-        $product->Isdiscount = ($request->discount != 0);
+        $book->title = $request->title;
+        $book->author = $request->author;
+        $book->discription = $request->discription;
+        $book->image = $image_name;
+        $book->avaliable = $request->avaliable;
+        $book->price = $request->price;
 
-        $product->save();*/
+        $book->save();
 
         return redirect('admin')->with('success' , 'Product Updated Successfully!');
     }
@@ -123,7 +126,7 @@ class AdminProductController extends Controller
      */
     public function destroy(string $id)
     {
-         //$product = product::find($id)->delete();
+         $book = book::find($id)->delete();
          return redirect('admin')->with('success' , 'Product Deleted Successfully!');
     }
 }

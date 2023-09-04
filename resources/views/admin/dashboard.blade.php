@@ -23,8 +23,8 @@
                 <tbody class="table-border-bottom-0">
                     @foreach ($borrows as $borrow)
                     <tr>
-                        <td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong>{{ $borrow->book_id }}</strong></td>
-                        <td>{{ $borrow->user_id }}</td>
+                        <td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong>{{ $borrow->book->title }}</strong></td>
+                        <td>{{ $borrow->user->name }}</td>
                         <td>{{ $borrow->return_date }}</td>
                     </tr>
                     @endforeach
@@ -126,7 +126,7 @@
                                         height:4.625rem;
                                         "
                               >
-                                <img src="{{ asset('images/book/'.$book->image) }}" alt="Avatar" class="rounded-circle" style="border: :0px solid #fff; object-fit:cover;"/>
+                                <img src="{{ asset('images/product/'.$book->image) }}" alt="Avatar" class="rounded-circle" style="border: :0px solid #fff; object-fit:cover;"/>
                               </li>
 
                             </ul>

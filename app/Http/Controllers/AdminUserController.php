@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
 use Illuminate\View\View;
@@ -69,6 +70,11 @@ class AdminUserController extends Controller
         $user = User::find($id)->first();
 
         return view('admin.user.edit' , ['user' => $user]);
+    }
+
+    public function profile() {
+        $user = Auth::user();
+        return view('admin.user.profile' , ['user' => $user]);
     }
 
     /**

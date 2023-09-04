@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\book;
 use App\Models\category;
 use App\Models\product;
 use Illuminate\Http\Request;
@@ -37,11 +38,10 @@ class HomeProductController extends Controller
      */
     public function show(string $id)
     {
-        $product = product::find($id);
+        $product = book::find($id);
 
-        $similar_products = $product->category->products;
 
-        return view('home.product' , ['product' => $product , 'similar_products' => $similar_products]);
+        return view('home.product' , ['product' => $product]);
     }
 
     /**

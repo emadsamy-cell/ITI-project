@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\book;
 use App\Models\cart;
 use App\Models\product;
 use App\Providers\RouteServiceProvider;
@@ -127,7 +128,7 @@ class CartController extends Controller
         //
     }
     public function add(Request $request , $id , $count){
-        $product = product::find($id);
+        $product = book::find($id);
         $oldCart = $request->session()->has('cart') ? $request->session()->get('cart') : null ;
 
 

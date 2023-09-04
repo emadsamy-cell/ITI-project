@@ -17,10 +17,10 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->double('price', 8, 2);
-            $table->boolean('avaliable');
+            $table->integer('avaliable');
             $table->string('author');
-            $table->foreignId('assignID')->nullable();
             $table->string('image');
+            $table->string('discription');
             $table->timestamps();
         });
     }

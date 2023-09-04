@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\BillingRequest;
+use App\Models\book;
+use App\Models\borrow;
 use App\Models\checkout;
 use App\Models\order;
 use App\Models\product;
@@ -30,16 +32,8 @@ class CheckoutController extends Controller
      */
     public function create()
     {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(BillingRequest $request)
-    {
-        // check logged in
-        if(! (Auth::check())){
+         // check logged in
+         if(! (Auth::check())){
             return redirect(route('login'));
         }
         // check all product are avaliable
@@ -49,40 +43,26 @@ class CheckoutController extends Controller
         foreach($productsInCart as $item){
             if( $item['qty'] > $item['item']->avaliable ){
                 return redirect()->back()->with('Not Avaliabe'
-                                                , 'There is only '. $item['item']->avaliable . ' left for' . $item['item']->name);
+                                                , 'There is only '. $item['item']->avaliable . ' left for' . $item['item']->title);
             }
         }
 
         // update avaliable products in database
 
         foreach($productsInCart as $item){
-            $product = product::find($item['item']->id);
+            $product = book::find($item['item']->id);
             $product->avaliable = $product->avaliable - $item['qty'];
             $product->save();
 
         }
-        // insert request in checkouts table
-        $checkout = checkout::create([
-            'name'=> $request->fname . $request->lname,
-            'company_name' => ($request->has('company_name') ? $request->company_name : null),
-            'main_address'=> $request->main_address,
-            'more_address' => ($request->has('more_address') ? $request->more_address : null),
-            'city'=> $request->city,
-            'state'=> $request->state,
-            'postcode'=> $request->postcode,
-            'email'=> $request->email,
-            'phone' => $request->phone,
-            'totalPrice'=> session('cart')->totalPrice,
 
-        ]);
-        // insert all products in orders table
+        // insert all products in borrow table
         foreach($productsInCart as $item){
 
-            order::create([
-                'checkout_id' => $checkout->id,
-                'product_name' => $item['item']->name,
-                'quantity' => $item['qty'],
-                'price' => $item['price'],
+            borrow::create([
+                'return_date' => date("Y-m-d"),
+                'user_id' => Auth::user()->id,
+                'book_id' => $item['item']->id,
             ]);
         }
 
@@ -90,7 +70,15 @@ class CheckoutController extends Controller
         session()->forget('cart');
 
         //return home
-        return redirect(RouteServiceProvider::HOME)->with('order successed' , 'Your ordered has been shipped successfully!');
+        return redirect(RouteServiceProvider::HOME)->with('order successed' , 'Your Books has been Added successfully!');
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store($request)
+    {
+
     }
 
     /**

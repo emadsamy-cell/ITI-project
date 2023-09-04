@@ -9,41 +9,34 @@
     <!-- Content -->
 
     <div class="container-xxl flex-grow-1 container-p-y">
-      <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Controller /</span> Add Product</h4>
+      <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Controller /</span> Add Book</h4>
       <div class="row">
         <div class="col-xl">
             <div class="card mb-4">
               <div class="card-header d-flex justify-content-between align-items-center">
-                <h5 class="mb-0">New Product</h5>
+                <h5 class="mb-0">New Book</h5>
               </div>
               <div class="card-body">
                 <form action="{{ route('AdminProduct.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="mb-3">
-                        <label class="form-label" for="name">Product Name</label>
-                        <input type="text" class="form-control" id="name" placeholder="Product Name" name="name" value="{{ old('name') }}" />
-                        @if ($errors->has('name'))
+                        <label class="form-label" for="name">Book Title</label>
+                        <input type="text" class="form-control" id="name" placeholder="Product Name" name="title" value="{{ old('title') }}" />
+                        @if ($errors->has('title'))
 
-                             <li class="list-group-item list-group-item-danger"> {{ $errors->first('name') }} </li>
+                             <li class="list-group-item list-group-item-danger"> {{ $errors->first('title') }} </li>
 
                         @endif
                     </div>
 
                     <div class="mb-3">
-                        <label for="Category" class="form-label">Category</label>
-                        <select class="form-select" id="Category" name="category" aria-label="Default select example">
+                        <label class="form-label" for="name">Book Author</label>
+                        <input type="text" class="form-control" id="name" placeholder="Product Name" name="author" value="{{ old('author') }}" />
+                        @if ($errors->has('author'))
 
-                        @foreach ($categories as $category)
-                            <option value="{{ $category['id'] }}" name="category" >{{ $category['name'] }}</option>
-                        @endforeach
-                        @if ($errors->has('categroy'))
-
-                             <li class="list-group-item list-group-item-danger"> {{ $errors->first('categroy') }} </li>
+                             <li class="list-group-item list-group-item-danger"> {{ $errors->first('author') }} </li>
 
                         @endif
-
-                    </select>
-
                     </div>
 
                     <div class="mb-3">
@@ -93,28 +86,7 @@
                         @endif
                     </div>
 
-                    <div class="mb-3">
-                        <label class="form-label" for="basic-default-email">Discount</label>
-                        <div class="input-group input-group-merge">
-                        <input
-                            type="text"
-                            id="basic-default-email"
-                            class="form-control"
-                            placeholder="Amount"
-                            aria-label="john.doe"
-                            aria-describedby="basic-default-email2"
-                            name="discount"
-                            value="{{ old('discount') }}"
-                            value="0"
-                        />
-                        <span class="input-group-text" id="basic-default-email2" style="color: #666afe;">%</span>
-                        </div>
-                        @if ($errors->has('discount'))
 
-                            <li class="list-group-item list-group-item-danger"> {{ $errors->first('discount') }} </li>
-
-                         @endif
-                    </div>
 
                     <div class="mb-3 row">
                         <label class="form-label" for="avaliable">Avliable</label>

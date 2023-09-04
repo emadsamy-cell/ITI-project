@@ -26,7 +26,8 @@
                                     <tr>
                                         <th class="li-product-remove">remove</th>
                                         <th class="li-product-thumbnail">images</th>
-                                        <th class="cart-product-name">Product</th>
+                                        <th class="cart-product-name">Book Title</th>
+                                        <th class="cart-product-name">Book Author</th>
                                         <th class="li-product-price">Unit Price</th>
                                         <th class="li-product-quantity">Quantity</th>
                                         <th class="li-product-subtotal">Total</th>
@@ -50,7 +51,12 @@
                                             </td>
                                             <td class="li-product-name">
                                                 <a href="{{ route('HomeProduct.show' , $product['item']->id) }}">
-                                                    {{ $product['item']->name }}
+                                                    {{ $product['item']->title }}
+                                                </a>
+                                            </td>
+                                            <td class="li-product-name">
+                                                <a href="{{ route('HomeProduct.show' , $product['item']->id) }}">
+                                                    {{ $product['item']->author }}
                                                 </a>
                                             </td>
                                             <td class="li-product-price">
@@ -103,7 +109,7 @@
                                         <li>Subtotal <span>${{ $cart->totalPrice }}</span></li>
                                         <li>Total <span>${{ $cart->totalPrice }}</span></li>
                                     </ul>
-                                    <a href="{{ route('checkout.index') }}">Proceed to checkout</a>
+                                    <a href="{{ route('checkout.create') }}">Check Out</a>
                                 </div>
                             </div>
                         </div>
